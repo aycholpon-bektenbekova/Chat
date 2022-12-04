@@ -24,7 +24,7 @@ class AuthFragment : Fragment() {
     private lateinit var binding: FragmentAuthBinding
     private lateinit var auth: FirebaseAuth
     private var verId = " "
-    private var phone = " "
+    private var phone = binding.inAuth.etNumber.text
 
         override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -102,7 +102,7 @@ class AuthFragment : Fragment() {
             val ref = FirebaseFirestore.getInstance().collection("Users").document(uid)
             val userData = hashMapOf<String, String>()
             userData["uid"] = uid
-            userData["phone"] = phone
+            userData["phone"] = phone.toString()
             userData["userName"] = binding.inAccept.etUsername.text.toString()
 
             ref.set(userData).addOnCompleteListener {
