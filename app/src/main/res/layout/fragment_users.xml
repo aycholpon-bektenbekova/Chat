@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".chats.ChatFragment">
+    tools:context=".users.UsersFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_chats"
+        android:id="@+id/rv_users"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_chat"
+        tools:listitem="@layout/item_users"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 

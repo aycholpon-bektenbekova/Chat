@@ -24,7 +24,7 @@ class AuthFragment : Fragment() {
     private lateinit var binding: FragmentAuthBinding
     private lateinit var auth: FirebaseAuth
     private var verId = " "
-    private var phone = binding.inAuth.etNumber.text
+    private var phone = ""
 
         override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -54,9 +54,9 @@ class AuthFragment : Fragment() {
         }
 
     private fun sendPhoneNumber() {
-        val phone = binding.inAuth.etNumber
+        phone = binding.inAuth.etNumber.text.toString()
         val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(phone.text.toString())       // Phone number to verify
+            .setPhoneNumber(phone)       // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
             .setActivity(requireActivity())                 // Activity (for callback binding)
             .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
@@ -99,15 +99,16 @@ class AuthFragment : Fragment() {
     private fun saveUserData() {
         val uid = auth.currentUser?.uid
         if (uid != null){
+            phone = binding.inAuth.etNumber.text.toString()
             val ref = FirebaseFirestore.getInstance().collection("Users").document(uid)
             val userData = hashMapOf<String, String>()
             userData["uid"] = uid
-            userData["phone"] = phone.toString()
+            userData["phone"] = phone
             userData["userName"] = binding.inAccept.etUsername.text.toString()
 
             ref.set(userData).addOnCompleteListener {
                 if (it.isSuccessful){
-                    findNavController().navigateUp()
+                    findNavController().navigate(R.id.usersFragment)
                 }else it.exception?.message?.let { it1 -> showToast(it1) }
 
             }
